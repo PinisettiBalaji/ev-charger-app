@@ -1,0 +1,13 @@
+<div class="container">
+
+  <app-map
+    [chargers]="chargers"
+    (selectCharger)="onSelect($event)">
+  </app-map>
+
+  <app-list
+    [chargers]="chargers"
+    (selectCharger)="onSelect($event)">
+  </app-list>
+
+</div>

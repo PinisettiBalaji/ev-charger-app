@@ -1,0 +1,7 @@
+<div class="list">
+  <app-card
+    *ngFor="let charger of chargers"
+    [charger]="charger"
+    (click)="selectCharger.emit(charger)">
+  </app-card>
+</div>

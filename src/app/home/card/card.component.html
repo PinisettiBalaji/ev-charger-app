@@ -1,0 +1,12 @@
+<div class="card">
+
+  <h3>{{ charger.name }}</h3>
+  <p>{{ charger.address }}</p>
+
+  <span [class.available]="charger.available">
+    {{ charger.available ? 'Available' : 'Busy' }}
+  </span>
+
+  <button (click)="openDirections()">Directions</button>
+
+</div>

@@ -3,18 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { EmptyStateComponent } from './shared/components/empty-state/empty-state.component';
+import { HomeComponent } from './home/home.component';
+import { MapComponent } from './home/map/map.component';
+import { FilterComponent } from './home/filter/filter.component';
+import { ListComponent } from './home/list/list.component';
+import { CardComponent } from './home/card/card.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    HeaderComponent,
+    LoaderComponent,
+    EmptyStateComponent,
+    HomeComponent,
+    MapComponent,
+    FilterComponent,
+    ListComponent,
+    CardComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-  ],
-  bootstrap: [App]
+  imports: [BrowserModule, CommonModule, AppRoutingModule],
+  providers: [provideBrowserGlobalErrorListeners()],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
