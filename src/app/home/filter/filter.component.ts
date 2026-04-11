@@ -1,9 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
-  standalone: false,
+  standalone: false,   
   templateUrl: './filter.component.html',
-  styleUrl: './filter.component.scss',
+  styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent {}
+export class FilterComponent {
+
+  @Output() filterChange = new EventEmitter<any>();
+
+  searchText = '';
+  type = '';
+  availableOnly = false;
+
+  applyFilter() {
+    this.filterChange.emit({
+      search: this.searchText,
+      type: this.type,
+      available: this.availableOnly
+    });
+  }
+}

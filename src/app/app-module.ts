@@ -12,6 +12,7 @@ import { FilterComponent } from './home/filter/filter.component';
 import { ListComponent } from './home/list/list.component';
 import { CardComponent } from './home/card/card.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,9 @@ import { CommonModule } from '@angular/common';
     MapComponent,
     FilterComponent,
     ListComponent,
-    CardComponent,
+    CardComponent
   ],
-  imports: [BrowserModule, CommonModule, AppRoutingModule],
+  imports: [BrowserModule,FormsModule, ReactiveFormsModule, CommonModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

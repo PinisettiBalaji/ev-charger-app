@@ -1,1 +1,16 @@
-<p>filter works!</p>
+<div class="filter">
+
+    <input type="text" placeholder="Search charger..." [(ngModel)]="searchText" (input)="applyFilter()" />
+
+    <select [(ngModel)]="type" (change)="applyFilter()">
+        <option value="">All</option>
+        <option value="Fast">Fast</option>
+        <option value="Slow">Slow</option>
+    </select>
+
+    <label>
+        <input type="checkbox" [(ngModel)]="availableOnly" (change)="applyFilter()" />
+        Available Only
+    </label>
+
+</div>
