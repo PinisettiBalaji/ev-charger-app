@@ -1,18 +1,72 @@
 .card {
-  padding: 10px;
-  border-radius: 10px;
-  background: #f5f5f5;
+    background: white;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
 
-  .available {
-    color: green;
-  }
+    &:hover {
+        transform: translateY(-5px);
+    }
 
-  button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background: green;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            margin: 0;
+            color: #0f172a;
+        }
+    }
+
+    .status {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        background: #ef4444;
+        color: white;
+
+        &.available {
+            background: #22c55e;
+        }
+    }
+
+    .address {
+        margin: 8px 0;
+        color: #475569;
+        font-size: 14px;
+    }
+
+    .meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        margin-bottom: 10px;
+
+        .type {
+            color: #2563eb;
+        }
+
+        .distance {
+            color: #64748b;
+        }
+    }
+
+    .direction-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #22c55e, #16a34a);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background: linear-gradient(90deg, #16a34a, #15803d);
+        }
+    }
 }

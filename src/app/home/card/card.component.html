@@ -1,12 +1,21 @@
 <div class="card">
 
-  <h3>{{ charger.name }}</h3>
-  <p>{{ charger.address }}</p>
+  <div class="header">
+    <h3>{{ charger.name }}</h3>
+    <span class="status" [class.available]="charger.available">
+      {{ charger.available ? 'Available' : 'Busy' }}
+    </span>
+  </div>
 
-  <span [class.available]="charger.available">
-    {{ charger.available ? 'Available' : 'Busy' }}
-  </span>
+  <p class="address">📍 {{ charger.address }}</p>
 
-  <button (click)="openDirections()">Directions</button>
+  <div class="meta">
+    <span class="type">⚡ {{ charger.type }}</span>
+    <span class="distance">📏 {{ distance }} km</span>
+  </div>
+
+  <button class="direction-btn" (click)="openDirections()">
+    Get Directions →
+  </button>
 
 </div>

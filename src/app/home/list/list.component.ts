@@ -10,4 +10,8 @@ import { Charger } from '../../shared/models/charger.model';
 export class ListComponent {
   @Input() chargers: Charger[] = [];
   @Output() selectCharger = new EventEmitter<Charger>();
+
+
+  @Input() userLat!: number;
+  @Input() userLng!: number;
 }

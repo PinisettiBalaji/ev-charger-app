@@ -1,0 +1,23 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+
+    <div class="card p-4 shadow" style="width: 350px;">
+
+        <h4 class="text-center mb-3">Login</h4>
+
+        <input type="text" class="form-control mb-2" placeholder="Mobile Number" [(ngModel)]="mobile" />
+
+        <button class="btn btn-success w-100 mb-2" (click)="sendOtp()">
+            Send OTP
+        </button>
+
+        @if (otpSent) {
+        <input type="text" class="form-control mb-2" placeholder="Enter OTP" [(ngModel)]="otp" />
+
+        <button class="btn btn-primary w-100" (click)="verifyOtp()">
+            Verify OTP
+        </button>
+        }
+
+    </div>
+
+</div>

@@ -7,12 +7,13 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { EmptyStateComponent } from './shared/components/empty-state/empty-state.component';
 import { HomeComponent } from './home/home.component';
-import { MapComponent } from './home/map/map.component';
 import { FilterComponent } from './home/filter/filter.component';
 import { ListComponent } from './home/list/list.component';
 import { CardComponent } from './home/card/card.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './auth/login/login.component';
+import { AddChargerComponent } from './charger/add-charger/add-charger.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +22,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoaderComponent,
     EmptyStateComponent,
     HomeComponent,
-    MapComponent,
     FilterComponent,
     ListComponent,
-    CardComponent
+    CardComponent,
+    LoginComponent,
+    AddChargerComponent,
   ],
-  imports: [BrowserModule,FormsModule, ReactiveFormsModule, CommonModule, AppRoutingModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, CommonModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

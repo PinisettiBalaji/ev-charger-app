@@ -1,7 +1,8 @@
-<div class="list">
-  <app-card
-    *ngFor="let charger of chargers"
-    [charger]="charger"
-    (click)="selectCharger.emit(charger)">
-  </app-card>
+<div class="grid">
+    <div class="grid">
+        @for (charger of chargers; track charger.id) {
+        <app-card [charger]="charger" [userLat]="userLat" [userLng]="userLng">
+        </app-card>
+        }
+    </div>
 </div>

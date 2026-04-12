@@ -1,1 +1,39 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+    <div class="container-fluid">
+
+        <!-- 🔋 Logo / Brand -->
+        <a class="navbar-brand fw-bold" href="#">
+            ⚡ EV Charge
+        </a>
+
+        <!-- 📱 Mobile Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- 🔽 Collapsible Content -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+
+            <!-- 📌 Center Menu -->
+            <ul class="navbar-nav mx-auto mb-2 mb-md-0" *ngIf="auth">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+
+            </ul>
+
+            <!-- 🔍 Search -->
+            <form class="d-flex me-3" role="search" *ngIf="auth">
+                <input class="form-control form-control-sm me-2" type="search" placeholder="Search stations">
+                <button class="btn btn-outline-success btn-sm">Search</button>
+            </form>
+
+        </div>
+
+        <!-- 🔐 Auth Buttons -->
+        <div class="d-flex">
+            <button class="btn btn-outline-light btn-sm me-2">Login</button>
+            <button class="btn btn-success btn-sm">Sign Up</button>
+        </div>
+    </div>
+</nav>
