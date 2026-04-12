@@ -14,13 +14,17 @@ export class LoginComponent {
   otp = '';
   otpSent = false;
 
+
   constructor(public authService: AuthService, private router: Router) { }
 
   sendOtp() {
     if (this.mobile.length === 10) {
       this.authService.sendOtp(this.mobile);
       this.otpSent = true;
+    } else {
+      alert('Enter valid mobile number');
     }
+
   }
 
   verifyOtp() {
@@ -28,6 +32,7 @@ export class LoginComponent {
 
     if (success) {
       this.router.navigate(['/home']); // ✅ redirect
+
     } else {
       alert('Invalid OTP');
     }

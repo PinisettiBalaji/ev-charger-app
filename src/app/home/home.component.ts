@@ -24,25 +24,51 @@ export class HomeComponent implements OnInit {
   filteredChargers: Charger[] = [];
   isSidebarCollapsed = false;
   showAddForm = false;
-  auth: any;
 
-  constructor(private chargerService: ChargerService, private authService: AuthService, private router: Router) {
-
-    this.auth = authService
-  }
+  constructor(private chargerService: ChargerService, public authService: AuthService, private router: Router) { }
 
   async ngOnInit() {
+    try {
+      // ✅ 1. Load chargers FIRST (always)
+      this.chargers = this.chargerService.getChargers();
 
-    this.chargers = this.chargerService.getChargers();
+      // ✅ 2. Get user location (safe)
+      const position = await this.getUserLocation();
 
-    const position = await new Promise<any>((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
+      if (position) {
+        this.userLat = position.coords.latitude;
+        this.userLng = position.coords.longitude;
+      }
+
+      // ✅ 3. Process data (distance / sorting etc.)
+      this.processData();
+
+    } catch (error) {
+      console.error('Error in ngOnInit:', error);
+
+      // fallback → still show chargers
+      this.processData();
+    }
+  }
+
+  getUserLocation(): Promise<GeolocationPosition | null> {
+    return new Promise((resolve) => {
+
+      if (!navigator.geolocation) {
+        console.warn('Geolocation not supported');
+        resolve(null);
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => resolve(position),
+        (error) => {
+          console.warn('Location denied or error:', error);
+          resolve(null); // ✅ prevent crash
+        }
+      );
+
     });
-
-    this.userLat = position.coords.latitude;
-    this.userLng = position.coords.longitude;
-
-    this.processData();
   }
 
   processData() {
@@ -107,7 +133,7 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout();
+    this.authService.logout();
     this.router.navigate(['/login']); // ✅ redirect after logout
   }
 }
