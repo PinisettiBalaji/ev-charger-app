@@ -1,21 +1,68 @@
-<div class="card">
+<div class="card shadow-sm h-100 charger-card">
 
-  <div class="header">
-    <h3>{{ charger.name }}</h3>
-    <span class="status" [class.available]="charger.available">
-      {{ charger.available ? 'Available' : 'Busy' }}
-    </span>
+  <div class="card-body">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">{{ charger.name }}</h5>
+
+      <span class="badge" [ngClass]="charger.status === 'Available' ? 'bg-success' :
+                   charger.status === 'Busy' ? 'bg-warning text-dark' :
+                   'bg-danger'">
+        {{ charger.status }}
+      </span>
+    </div>
+
+    <!-- Address -->
+    <p class="text-muted mb-2">📍 {{ charger.address }}</p>
+
+    <!-- Power -->
+    <p class="mb-1">
+      ⚡ <strong>{{ charger.powerOutput }} kW</strong> ({{ charger.powerType }})
+    </p>
+
+    <!-- Connectors -->
+    <p class="mb-1">
+      🔌 {{ charger.connectors?.join(', ') }}
+    </p>
+
+    <!-- Price -->
+    <p class="mb-1">
+      💰 ₹{{ charger.pricePerUnit }}/kWh
+    </p>
+
+    <!-- Ports + Chargers -->
+    <p class="mb-1">
+      🔋 Ports: {{ charger.ports }} |
+      Stations: {{ charger.numberOfChargers }}
+    </p>
+
+    <!-- Timing -->
+    <p class="mb-1">
+      🕒 {{ charger.openTime }} - {{ charger.closeTime }}
+    </p>
+
+    <!-- Distance -->
+    <p *ngIf="charger.distance" class="text-primary mb-0">
+      📏 {{ charger.distance | number:'1.1-2' }} km away
+    </p>
+
+    <div class="mt-3 d-flex justify-content-between">
+
+    <!-- 📍 Directions -->
+    <button class="btn btn-outline-primary btn-sm" (click)="getDirections()">
+      📍 Directions
+    </button>
+
+    <!-- 📞 Call -->
+    <a class="btn btn-outline-success btn-sm" [href]="'tel:' + charger.contact">
+      📞 Call
+    </a>
+
   </div>
 
-  <p class="address">📍 {{ charger.address }}</p>
-
-  <div class="meta">
-    <span class="type">⚡ {{ charger.type }}</span>
-    <span class="distance">📏 {{ distance }} km</span>
   </div>
 
-  <button class="direction-btn" (click)="openDirections()">
-    Get Directions →
-  </button>
+  
 
 </div>

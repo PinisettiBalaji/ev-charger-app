@@ -1,110 +1,377 @@
 import { Injectable } from '@angular/core';
 import { Charger } from '../../shared/models/charger.model';
+import { HttpClient } from '@angular/common/http';
+
+// import{charge}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChargerService {
 
-  chargers: Charger[] = [
+  private chargers: Charger[] = [
     {
       id: 1,
       name: 'Kukatpally EV Hub',
+      address: 'Kukatpally, Hyderabad',
+      location: 'Hyderabad',
       lat: 17.4948,
       lng: 78.3996,
       type: 'Fast',
+      connectors: ['CCS', 'Type 2'],
+      ports: 6,
+      numberOfChargers: 3,
+      powerType: 'DC',
+      powerOutput: 50,
       available: true,
-      address: 'Kukatpally, Hyderabad'
+      status: 'Available',
+      pricePerUnit: 16,
+      openTime: '05:00',
+      closeTime: '23:59',
+      contact: '9000000001'
     },
     {
       id: 2,
       name: 'Hitech City Charging Point',
+      address: 'Hitech City, Hyderabad',
+      location: 'Hyderabad',
       lat: 17.4435,
       lng: 78.3772,
       type: 'Fast',
+      connectors: ['CCS'],
+      ports: 4,
+      numberOfChargers: 2,
+      powerType: 'DC',
+      powerOutput: 60,
       available: true,
-      address: 'Hitech City, Hyderabad'
+      status: 'Available',
+      pricePerUnit: 15,
+      openTime: '06:00',
+      closeTime: '23:00',
+      contact: '9876543210'
     },
     {
       id: 3,
-      name: 'Miyapur EV Station',
-      lat: 17.4965,
-      lng: 78.3562,
+      name: 'Madhapur EV Station',
+      address: 'Madhapur, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4483,
+      lng: 78.3915,
       type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 3,
+      numberOfChargers: 2,
+      powerType: 'AC',
+      powerOutput: 22,
       available: false,
-      address: 'Miyapur, Hyderabad'
+      status: 'Busy',
+      pricePerUnit: 12,
+      openTime: '07:00',
+      closeTime: '22:00',
+      contact: '9000000002'
     },
     {
       id: 4,
-      name: 'JNTU Charging Zone',
-      lat: 17.4933,
-      lng: 78.3915,
-      type: 'Fast',
-      available: true,
-      address: 'JNTU, Hyderabad'
-    },
-    {
-      id: 5,
-      name: 'KPHB Phase 5 Station',
-      lat: 17.4849,
-      lng: 78.4070,
-      type: 'Slow',
-      available: true,
-      address: 'KPHB Phase 5, Hyderabad'
-    },
-    {
-      id: 6,
-      name: 'Madhapur EV Point',
-      lat: 17.4483,
-      lng: 78.3915,
-      type: 'Fast',
-      available: false,
-      address: 'Madhapur, Hyderabad'
-    },
-    {
-      id: 7,
-      name: 'Gachibowli Charging Hub',
+      name: 'Gachibowli Super Charge',
+      address: 'Gachibowli, Hyderabad',
+      location: 'Hyderabad',
       lat: 17.4401,
       lng: 78.3489,
       type: 'Fast',
+      connectors: ['CCS', 'CHAdeMO'],
+      ports: 5,
+      numberOfChargers: 3,
+      powerType: 'DC',
+      powerOutput: 120,
       available: true,
-      address: 'Gachibowli, Hyderabad'
+      status: 'Available',
+      pricePerUnit: 18,
+      openTime: '00:00',
+      closeTime: '23:59',
+      contact: '9000000003'
+    },
+    {
+      id: 5,
+      name: 'Banjara Hills EV Point',
+      address: 'Banjara Hills, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4126,
+      lng: 78.4482,
+      type: 'Fast',
+      connectors: ['CCS'],
+      ports: 4,
+      numberOfChargers: 2,
+      powerType: 'DC',
+      powerOutput: 60,
+      available: false,
+      status: 'Maintenance',
+      pricePerUnit: 17,
+      openTime: '06:00',
+      closeTime: '22:00',
+      contact: '9000000004'
+    },
+    {
+      id: 6,
+      name: 'Jubilee Hills Charging Hub',
+      address: 'Jubilee Hills, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4326,
+      lng: 78.4071,
+      type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 6,
+      numberOfChargers: 4,
+      powerType: 'AC',
+      powerOutput: 22,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 11,
+      openTime: '08:00',
+      closeTime: '21:00',
+      contact: '9000000005'
+    },
+    {
+      id: 7,
+      name: 'Secunderabad EV Zone',
+      address: 'Secunderabad, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4399,
+      lng: 78.4983,
+      type: 'Fast',
+      connectors: ['CCS', 'Type 2'],
+      ports: 5,
+      numberOfChargers: 3,
+      powerType: 'DC',
+      powerOutput: 50,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 16,
+      openTime: '05:00',
+      closeTime: '23:00',
+      contact: '9000000006'
     },
     {
       id: 8,
-      name: 'Nizampet EV Station',
-      lat: 17.5169,
-      lng: 78.3806,
+      name: 'Ameerpet Charging Station',
+      address: 'Ameerpet, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4375,
+      lng: 78.4483,
       type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 3,
+      numberOfChargers: 2,
+      powerType: 'AC',
+      powerOutput: 11,
       available: true,
-      address: 'Nizampet, Hyderabad'
+      status: 'Available',
+      pricePerUnit: 10,
+      openTime: '09:00',
+      closeTime: '21:00',
+      contact: '9000000007'
     },
     {
       id: 9,
-      name: 'Pragathi Nagar Charger',
-      lat: 17.5175,
-      lng: 78.3910,
+      name: 'LB Nagar EV Charging',
+      address: 'LB Nagar, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.3457,
+      lng: 78.5522,
       type: 'Fast',
+      connectors: ['CCS'],
+      ports: 4,
+      numberOfChargers: 2,
+      powerType: 'DC',
+      powerOutput: 60,
       available: false,
-      address: 'Pragathi Nagar, Hyderabad'
+      status: 'Busy',
+      pricePerUnit: 14,
+      openTime: '06:00',
+      closeTime: '22:00',
+      contact: '9000000008'
     },
     {
       id: 10,
-      name: 'Bachupally EV Station',
-      lat: 17.5373,
-      lng: 78.3840,
-      type: 'Slow',
+      name: 'Kompally EV Station',
+      address: 'Kompally, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.5416,
+      lng: 78.4845,
+      type: 'Fast',
+      connectors: ['CCS', 'CHAdeMO'],
+      ports: 6,
+      numberOfChargers: 4,
+      powerType: 'DC',
+      powerOutput: 100,
       available: true,
-      address: 'Bachupally, Hyderabad'
+      status: 'Available',
+      pricePerUnit: 18,
+      openTime: '00:00',
+      closeTime: '23:59',
+      contact: '9000000009'
+    },
+    {
+      id: 11,
+      name: 'Uppal Charging Point',
+      address: 'Uppal, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4050,
+      lng: 78.5591,
+      type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 2,
+      numberOfChargers: 1,
+      powerType: 'AC',
+      powerOutput: 7,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 9,
+      openTime: '08:00',
+      closeTime: '20:00',
+      contact: '9000000010'
+    },
+    {
+      id: 12,
+      name: 'Airport EV Fast Charge',
+      address: 'Shamshabad Airport, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.2403,
+      lng: 78.4294,
+      type: 'Fast',
+      connectors: ['CCS'],
+      ports: 8,
+      numberOfChargers: 5,
+      powerType: 'DC',
+      powerOutput: 150,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 20,
+      openTime: '00:00',
+      closeTime: '23:59',
+      contact: '9000000011'
+    },
+    {
+      id: 13,
+      name: 'Mehdipatnam EV Station',
+      address: 'Mehdipatnam, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.3950,
+      lng: 78.4390,
+      type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 3,
+      numberOfChargers: 2,
+      powerType: 'AC',
+      powerOutput: 22,
+      available: false,
+      status: 'Maintenance',
+      pricePerUnit: 10,
+      openTime: '07:00',
+      closeTime: '21:00',
+      contact: '9000000012'
+    },
+    {
+      id: 14,
+      name: 'Nallagandla Charging Hub',
+      address: 'Nallagandla, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4690,
+      lng: 78.3100,
+      type: 'Fast',
+      connectors: ['CCS', 'Type 2'],
+      ports: 5,
+      numberOfChargers: 3,
+      powerType: 'DC',
+      powerOutput: 60,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 17,
+      openTime: '06:00',
+      closeTime: '23:00',
+      contact: '9000000013'
+    },
+    {
+      id: 15,
+      name: 'Miyapur EV Charging Station',
+      address: 'Miyapur, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.4931,
+      lng: 78.3917,
+      type: 'Slow',
+      connectors: ['Type 2'],
+      ports: 4,
+      numberOfChargers: 2,
+      powerType: 'AC',
+      powerOutput: 11,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 11,
+      openTime: '08:00',
+      closeTime: '22:00',
+      contact: '9000000014'
+    },
+    {
+      id: 16,
+      name: 'Manneguda EV Charging Station',
+      address: 'Manneguda, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.2735,
+      lng: 78.5480,
+      type: 'Fast',
+      connectors: ['CCS', 'Type 2'],
+      ports: 4,
+      numberOfChargers: 2,
+      powerType: 'DC',
+      powerOutput: 60,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 14,
+      openTime: '06:00',
+      closeTime: '22:00',
+      contact: '9000000015'
+    },
+    {
+      id: 17,
+      name: 'Adibatla EV Charging Hub',
+      address: 'Adibatla, Hyderabad',
+      location: 'Hyderabad',
+      lat: 17.2367,
+      lng: 78.5966,
+      type: 'Fast',
+      connectors: ['CCS', 'CHAdeMO'],
+      ports: 6,
+      numberOfChargers: 3,
+      powerType: 'DC',
+      powerOutput: 100,
+      available: true,
+      status: 'Available',
+      pricePerUnit: 15,
+      openTime: '05:30',
+      closeTime: '23:30',
+      contact: '9000000016'
     }
   ];
 
+  constructor(private http: HttpClient) { }
 
-  getChargers() {
+  // // Load from JSON
+  // loadChargers(): Promise<any[]> {
+  //   return new Promise((resolve) => {
+  //     this.http.get<any[]>('assets/data/chargers.json')
+  //       .subscribe(data => {
+  //         this.chargers = data;
+  //         resolve(this.chargers);
+  //       });
+  //   });
+  // }
+
+  // Get current data
+  getChargers(): any[] {
     return this.chargers;
   }
 
-  addCharger(charger: Charger) {
-    this.chargers.push(charger);
+  // ✅ PUSH NEW CHARGER
+  addCharger(newCharger: any) {
+    this.chargers.push(newCharger);
   }
 }

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { AddChargerComponent } from './charger/add-charger/add-charger.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { AddChargerComponent } from './charger/add-charger/add-charger.component
     LoginComponent,
     AddChargerComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, CommonModule, AppRoutingModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

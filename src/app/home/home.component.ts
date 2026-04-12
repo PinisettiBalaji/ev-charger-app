@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     try {
       // ✅ 1. Load chargers FIRST (always)
-      this.chargers = this.chargerService.getChargers();
+      this.chargers = await this.chargerService.getChargers();
 
       // ✅ 2. Get user location (safe)
       const position = await this.getUserLocation();

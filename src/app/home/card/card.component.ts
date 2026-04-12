@@ -28,8 +28,36 @@ export class CardComponent {
     return +(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)))).toFixed(1);
   }
 
-  openDirections() {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${this.charger.lat},${this.charger.lng}`;
-    window.open(url, '_blank');
+
+
+  getDirections() {
+
+    if (!this.charger.lat || !this.charger.lng) {
+      alert('Location not available for this charger');
+      return;
+    }
+
+    // 🔥 Get current location
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+
+        const origin = `${position.coords.latitude},${position.coords.longitude}`;
+        const destination = `${this.charger.lat},${this.charger.lng}`;
+
+        // Google Maps navigation
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+
+        window.open(url, '_blank');
+      },
+      (error) => {
+        console.warn('Location error:', error);
+
+        // fallback → only destination
+        const destination = `${this.charger.lat},${this.charger.lng}`;
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+
+        window.open(url, '_blank');
+      }
+    );
   }
 }

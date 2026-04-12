@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChargerService } from '../../core/services/charger.service';
 
 @Component({
@@ -9,34 +9,90 @@ import { ChargerService } from '../../core/services/charger.service';
 })
 export class AddChargerComponent {
 
-  @Output() added = new EventEmitter<void>();
-  charger: any = {
-    name: '',
-    type: 'Fast',
-    available: true
-  };
-
   constructor(private chargerService: ChargerService) { }
 
-  async addCharger() {
+  charger: any = this.getEmptyCharger();
 
-    const position = await new Promise<any>((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
+  connectorOptions = ['Type2', 'CCS', 'CHAdeMO'];
 
-    const newCharger = {
+  submitted = false;
+
+  // ✅ Empty model
+  getEmptyCharger() {
+    return {
       id: Date.now(),
-      name: this.charger.name,
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      type: this.charger.type,
-      available: this.charger.available,
-      address: 'User Added'
+      name: '',
+      address: '',
+      location: '',
+      lat: '',
+      lng: '',
+      type: '',
+      connectors: [],
+      ports: '',
+      numberOfChargers: '',
+      powerType: '',
+      powerOutput: '',
+      pricePerUnit: '',
+      openTime: '',
+      closeTime: '',
+      contact: '',
+      status: 'Available',
+      available: true
     };
+  }
 
-    this.chargerService.addCharger(newCharger);
+  // ✅ Handle connectors
+  onConnectorChange(event: any, type: string) {
+    if (event.target.checked) {
+      this.charger.connectors.push(type);
+    } else {
+      this.charger.connectors =
+        this.charger.connectors.filter((c: string) => c !== type);
+    }
+  }
 
-    alert('Charger Added!');
-    this.added.emit();
+  // ✅ Submit
+  onSubmit() {
+    this.submitted = true;
+
+    if (
+      !this.charger.name ||
+      !this.charger.address ||
+      this.charger.connectors.length === 0 ||
+      !this.charger.powerType ||
+      !this.charger.powerOutput
+    ) {
+      return;
+    }
+
+    // 🔥 Save to service
+    this.chargerService.addCharger({ ...this.charger });
+
+    // ✅ Success + confirm
+    const addMore = confirm(
+      '✅ Charger added successfully!\n\nDo you want to add another charger?'
+    );
+
+    if (addMore) {
+      this.resetForm();
+    } else {
+      this.resetForm();
+      // optionally navigate
+      // this.router.navigate(['/home']);
+    }
+  }
+
+  // ✅ Reset
+  resetForm() {
+    this.charger = this.getEmptyCharger();
+    this.submitted = false;
+  }
+
+  // ✅ Get current location
+  useCurrentLocation() {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      this.charger.lat = pos.coords.latitude;
+      this.charger.lng = pos.coords.longitude;
+    });
   }
 }
