@@ -73,7 +73,11 @@ export class HomeComponent implements OnInit {
 
   processData() {
     this.chargers = this.chargerService.getChargers();
+
+
+    
     this.filteredChargers = this.chargers;
+
 
   }
 
@@ -81,21 +85,27 @@ export class HomeComponent implements OnInit {
     this.showAddForm = !this.showAddForm;
   }
 
-  getDistance(c: Charger): number {
-    const R = 6371;
+  getDistance(lat: number, lng: number): number {
+    const R = 6371; // Earth radius in km
 
-    const dLat = (c.lat - this.userLat) * Math.PI / 180;
-    const dLng = (c.lng - this.userLng) * Math.PI / 180;
+    const dLat = this.toRad(lat - this.userLat);
+    const dLng = this.toRad(lng - this.userLng);
 
     const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(this.userLat * Math.PI / 180) *
-      Math.cos(c.lat * Math.PI / 180) *
-      Math.sin(dLng / 2) ** 2;
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.toRad(this.userLat)) *
+      Math.cos(this.toRad(lat)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
 
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
   }
 
+  toRad(value: number) {
+    return value * Math.PI / 180;
+  }
   toggleSidebar() {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
   }
